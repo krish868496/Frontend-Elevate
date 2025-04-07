@@ -1,52 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Semantic Blog</title>
   <style>
     body {
+      font-family: sans-serif;
       margin: 0;
       padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
     }
-    header {
-        max-width: 1200px;
-      background-color: #333;
+    header, footer {
+      background-color: #1e293b;
       color: #fff;
-      padding: 5px 20px;
+      padding: 1rem;
       text-align: center;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
-    header ul {
-      display: flex;
-      list-style: none;
-      gap: 20px;
+    nav {
+      background: #334155;
+      padding: 0.5rem;
+      text-align: center;
     }
-    button {
-      padding: 10px 20px;
-      border-radius: 8px;
-      background: #3b78d98f;
-      border: none;
-      color: white;
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    article {
+      background: #f8fafc;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #3b82f6;
+    }
+    aside {
+      background: #f1f5f9;
+      padding: 1rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    footer p {
+      margin: 0;
     }
   </style>
-  <body>
-    <header>
-      <h1>Welcome to Elevate</h1>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#home">Contact</a></li>
-      </ul>
-      <button>Get Started</button>
-    </header>
-  </body>
+</head>
+<body>
+
+  <header>
+    <h1>Frontend Learner Blog</h1>
+    <p>Learn HTML, CSS, JavaScript & more</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Tutorials</a>
+    <a href="#">Articles</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <main>
+    <article>
+      <header>
+        <h2>Understanding Semantic HTML</h2>
+        <p><time datetime="2025-04-07">April 7, 2025</time> by <strong>Krishan</strong></p>
+      </header>
+      <section>
+        <p>Semantic HTML helps structure web content in a meaningful way. It improves accessibility, SEO, and code readability.</p>
+      </section>
+      <section>
+        <h3>Why Use Semantic Tags?</h3>
+        <p>They describe the type of content they contain, like `<article>`, `<section>`, `<nav>`, etc.</p>
+      </section>
+    </article>
+
+    <article>
+      <header>
+        <h2>Getting Started with HTML</h2>
+        <p><time datetime="2025-03-30">March 30, 2025</time> by <strong>Krishan</strong></p>
+      </header>
+      <section>
+        <p>HTML is the foundation of the web. Learn how to structure pages using basic elements like headings, paragraphs, and lists.</p>
+      </section>
+    </article>
+  </main>
+
+  <aside>
+    <h3>About the Author</h3>
+    <p>I’m Krishan<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Semantic Blog</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header, footer {
+      background-color: #1e293b;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background: #334155;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    article {
+      background: #f8fafc;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #3b82f6;
+    }
+    aside {
+      background: #f1f5f9;
+      padding: 1rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    footer p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Frontend Learner Blog</h1>
+    <p>Learn HTML, CSS, JavaScript & more</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Tutorials</a>
+    <a href="#">Articles</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <main>
+    <article>
+      <header>
+        <h2>Understanding Semantic HTML</h2>
+        <p><time datetime="2025-04-07">April 7, 2025</time> by <strong>Krishan</strong></p>
+      </header>
+      <section>
+        <p>Semantic HTML helps structure web content in a meaningful way. It improves accessibility, SEO, and code readability.</p>
+      </section>
+      <section>
+        <h3>Why Use Semantic Tags?</h3>
+        <p>They describe the type of content they contain, like `<article>`, `<section>`, `<nav>`, etc.</p>
+      </section>
+    </article>
+
+    <article>
+      <header>
+        <h2>Getting Started with HTML</h2>
+        <p><time datetime="2025-03-30">March 30, 2025</time> by <strong>Krishan</strong></p>
+      </header>
+      <section>
+        <p>HTML is the foundation of the web. Learn how to structure pages using basic elements like headings, paragraphs, and lists.</p>
+      </section>
+    </article>
+  </main>
+
+  <aside>
+    <h3>About the Author</h3>
+    <p>I’m Krishan, a frontend developer sharing my learning journey through blogs and open-source projects.</p>
+  </aside>
+
+  <footer>
+    <p>&copy; 2025 Frontend Learner Blog. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Semantic Blog</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header, footer {
+      background-color: #1e293b;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background: #334155;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    article {
+      background: #f8fafc;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #3b82f6;
+    }
+    aside {
+      background: #f1f5f9;
+      padding: 1rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    footer p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Frontend Learner Blog</h1>
+    <p>Learn HTML, CSS, JavaScript & more</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Tutorials</a>
+    <a href="#">Articles</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <main>
+    <article>
+      <header>
+        <h2>Understanding Semantic HTML</h2>
+        <p><time datetime="2025-04-07">April 7, 2025</time> by <strong>Krishan</strong></p>
+      </header>
+      <section>
+        <p>Semantic HTML helps structure web content in a meaningful way. It improves accessibility, SEO, and code readability.</p>
+      </section>
+      <section>
+        <h3>Why Use Semantic Tags?</h3>
+        <p>They describe the type of content they contain, like `<article>`, `<section>`, `<nav>`, etc.</p>
+      </section>
+    </article>
+
+    <article>
+      <header>
+        <h2>Getting Started with HTML</h2>
+        <p><time datetime="2025-03-30">March 30, 2025</time> by <strong>Krishan</strong></p>
+      </header>
+      <section>
+        <p>HTML is the foundation of the web. Learn how to structure pages using basic elements like headings, paragraphs, and lists.</p>
+      </section>
+    </article>
+  </main>
+
+  <aside>
+    <h3>About the Author</h3>
+    <p>I’m Krishan, a frontend developer sharing my learning journey through blogs and open-source projects.</p>
+  </aside>
+
+  <footer>
+    <p>&copy; 2025 Frontend Learner Blog. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
+, a frontend developer sharing my learning journey through blogs and open-source projects.</p>
+  </aside>
+
+  <footer>
+    <p>&copy; 2025 Frontend Learner Blog. All rights reserved.</p>
+  </footer>
+
+</body>
 </html>
