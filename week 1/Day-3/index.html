@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Grid Complete Examples</title>
+    <style>
+      /* 🔹 Base Styling */
+      body {
+        font-family: sans-serif;
+        padding: 40px;
+        background: #f4f4f4;
+      }
+
+      section {
+        margin-bottom: 80px;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .grid {
+        display: grid;
+        gap: 10px;
+        background: #ddd;
+        padding: 10px;
+      }
+
+      .grid > div {
+        background: #4a90e2;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 20px;
+        text-align: center;
+      }
+
+      /* 🔸 1. Basic Grid: 3 columns */
+      .grid-basic {
+        grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+      }
+
+      /* 🔸 2. Fixed + Flexible layout */
+      .grid-fixed-flex {
+        grid-template-columns: 200px 1fr 2fr; /* Mixed widths */
+      }
+
+      /* 🔸 3. Auto-fit with minmax */
+      .grid-auto-fit {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+
+      /* 🔸 4. Grid Template Areas */
+      .grid-areas {
+        grid-template-columns: 1fr 3fr;
+        grid-template-areas:
+          "header header"
+          "nav main"
+          "nav aside"
+          "footer footer";
+      }
+
+      .header {
+        grid-area: header;
+        background: #f67280;
+      }
+      .nav {
+        grid-area: nav;
+        background: #c06c84;
+      }
+      .main {
+        grid-area: main;
+        background: #6c5b7b;
+      }
+      .aside {
+        grid-area: aside;
+        background: #355c7d;
+      }
+      .footer {
+        grid-area: footer;
+        background: #99b898;
+      }
+
+      /* 🔸 5. Alignment Properties */
+      .grid-alignment {
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(2, 100px);
+        width: 500px;
+        height: 300px;
+        justify-content: center; /* Align grid horizontally */
+        align-content: center; /* Align grid vertically */
+        justify-items: center; /* Align items inside each cell (horizontal) */
+        align-items: center; /* Align items inside each cell (vertical) */
+      }
+
+      /* 🔸 6. Grid Item Placement */
+      .grid-placement {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 100px);
+      }
+
+      .item1 {
+        grid-column: 1 / 3;
+      } /* spans column 1 and 2 */
+      .item2 {
+        grid-row: 1 / 3;
+      } /* spans both rows */
+      .item3 {
+        grid-column: 3 / 5;
+        grid-row: 2;
+      }
+
+      /* 🔸 7. Nested Grid */
+      .grid-nested {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nested {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🔹 1. Basic Grid -->
+    <section>
+      <h2>1. Basic Grid</h2>
+      <div class="grid grid-basic">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </div>
+    </section>
+
+    <!-- 🔹 2. Fixed + Flexible Layout -->
+    <section>
+      <h2>2. Fixed + Flexible Layout</h2>
+      <div class="grid grid-fixed-flex">
+        <div>Sidebar</div>
+        <div>Content</div>
+        <div>Ads</div>
+      </div>
+    </section>
+
+    <!-- 🔹 3. Auto-Fit with minmax() -->
+    <section>
+      <h2>3. Auto-Fit with minmax()</h2>
+      <div class="grid grid-auto-fit">
+        <div>Card 1</div>
+        <div>Card 2</div>
+        <div>Card 3</div>
+        <div>Card 4</div>
+        <div>Card 5</div>
+      </div>
+    </section>
+
+    <!-- 🔹 4. Grid Template Areas -->
+    <section>
+      <h2>4. Grid Template Areas</h2>
+      <div class="grid grid-areas">
+        <div class="header">Header</div>
+        <div class="nav">Nav</div>
+        <div class="main">Main</div>
+        <div class="aside">Aside</div>
+        <div class="footer">Footer</div>
+      </div>
+    </section>
+
+    <!-- 🔹 5. Alignment Properties -->
+    <section>
+      <h2>5. Alignment Properties</h2>
+      <div class="grid grid-alignment">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+      </div>
+    </section>
+
+    <!-- 🔹 6. Item Placement -->
+    <section>
+      <h2>6. Item Placement (Row & Column Span)</h2>
+      <div class="grid grid-placement">
+        <div class="item1">Span Col 1-2</div>
+        <div class="item2">Span Rows</div>
+        <div class="item3">Span Col 3-4, Row 2</div>
+        <div>4</div>
+        <div>5</div>
+      </div>
+    </section>
+
+    <!-- 🔹 7. Nested Grid -->
+    <section>
+      <h2>7. Nested Grid</h2>
+      <div class="grid grid-nested">
+        <div class="nested">
+          <div>Sub 1</div>
+          <div>Sub 2</div>
+        </div>
+        <div class="nested">
+          <div>Sub A</div>
+          <div>Sub B</div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
