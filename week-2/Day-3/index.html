@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mastering Event Delegation & Propagation</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+      }
+      .container {
+        border: 2px solid #333;
+        padding: 20px;
+        background: #f9f9f9;
+      }
+      .item {
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #e0f7fa;
+        border: 1px solid #00796b;
+        cursor: pointer;
+      }
+      .sub-item {
+        padding: 5px;
+        background-color: #fff3e0;
+        margin-top: 5px;
+        border: 1px dashed #f57c00;
+        cursor: pointer;
+      }
+      .log {
+        margin-top: 20px;
+        font-family: monospace;
+        background: #f4f4f4;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Event Delegation, Bubbling, Capturing – Practice</h2>
+
+    <button id="addItem">Add Item</button>
+
+    <div class="container" id="container">
+      <div class="item" data-id="1">
+        Item 1
+        <div class="sub-item">Sub-Item A</div>
+      </div>
+      <div class="item" data-id="2">
+        Item 2
+        <div class="sub-item">Sub-Item B</div>
+      </div>
+    </div>
+
+    <div class="log" id="log">📋 Logs will appear here...</div>
+
+    <div
+      id="outer"
+      style="padding: 20px; background: lightblue; margin-top: 30px"
+    >
+      Outer
+      <div id="middle" style="padding: 20px; background: lightgreen">
+        Middle
+        <div id="inner" style="padding: 20px; background: lightcoral">
+          Inner
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // bubbling and capturing phase
+      // Capturing phase listener
+      document.getElementById("outer").addEventListener("click", () => {
+        alert("Outer — Capturing Phase");
+      }, true); // 👈 true = capturing
+
+      // Bubbling phase listener
+      document.getElementById("middle").addEventListener("click", () => {
+        alert("Outer — Middle Phase");
+      }, true); // 👈 false by default = bubbling
+
+      // Inner click
+      document.getElementById("inner").addEventListener("click", () => {
+        alert("Inner clicked");
+      }, true);
+
+      //   ================
+      const container = document.getElementById("container");
+      const log = document.getElementById("log");
+      const addItemButton = document.getElementById("addItem");
+      let itemCount = 2;
+
+      // Log helper
+      function logMessage(msg) {
+        log.textContent += `\n${msg}`;
+        log.scrollTop = log.scrollHeight;
+      }
+
+      // Event Delegation – BUBBLING
+      container.addEventListener("click", function (e) {
+        const item = e.target.closest(".item");
+
+        if (item && container.contains(item)) {
+          const id = item.dataset.id;
+          logMessage(`🟦 Item clicked: ID = ${id}`);
+        }
+
+        // Handle sub-item and stop bubbling
+        const subItem = e.target.closest(".sub-item");
+        if (subItem) {
+          e.stopPropagation(); // prevent bubbling to .item
+          logMessage("🟥 Sub-item clicked: bubbling stopped.");
+        }
+      });
+
+      // CAPTURING phase example
+      container.addEventListener(
+        "click",
+        function () {
+          logMessage("🔽 Container clicked (capturing phase)");
+        },
+        true
+      ); // true = capture
+
+      // Add new dynamic items
+      addItemButton.addEventListener("click", () => {
+        itemCount++;
+        const newItem = document.createElement("div");
+        newItem.className = "item";
+        newItem.dataset.id = itemCount;
+        newItem.innerHTML = `Item ${itemCount} <div class="sub-item">Sub-Item ${String.fromCharCode(
+          64 + itemCount
+        )}</div>`;
+        container.appendChild(newItem);
+      });
+    </script>
+  </body>
+</html>
