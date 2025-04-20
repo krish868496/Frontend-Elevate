@@ -83,4 +83,3 @@ console.log("Mutated colors:", mutableColors); // ["pink", "yellow", "black"]
 // console.log("Mutated fruits:", mutatedFruits);
 // console.log("Original fruits:", fruits);
 // console.log("Immutably updated fruits:", immutablyUpdatedFruits);
-
