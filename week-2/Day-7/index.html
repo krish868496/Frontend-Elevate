@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>faq</title>
+    <style>
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      #faq-container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      li {
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+      }
+      li:hover {
+        background-color: #f1f1f1;
+      }
+      .toggle {
+        display: none;
+        margin-top: 10px;
+        font-size: 14px;
+        border-top: 1px solid #ccc;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Faq</h1>
+    <div id="faq-container"></div>
+
+    <script>
+      const faqs = [
+        {
+          question: "What is your return policy?",
+          answer:
+            "You can return any item within 30 days of purchase for a full refund.",
+        },
+        {
+          question: "How long does shipping take?",
+          answer: "Shipping usually takes 5-7 business days.",
+        },
+        {
+          question: "Do you offer international shipping?",
+          answer: "Yes, we ship to over 100 countries worldwide.",
+        },
+        {
+          question: "Can I track my order?",
+          answer:
+            "Yes, you will receive a tracking number once your order has shipped.",
+        },
+        {
+          question: "What payment methods do you accept?",
+          answer: "We accept all major credit cards, PayPal, and Apple Pay.",
+        },
+        {
+          question: "How can I contact customer service?",
+          answer:
+            "You can reach us via email at @example.com or by calling 1-800-555-1234.",
+        },
+        {
+          question: "Do you offer gift cards?",
+          answer: "Yes, we offer gift cards in various denominations.",
+        },
+        {
+          question: "Can I change or cancel my order?",
+          answer:
+            "You can change or cancel your order within 24 hours of placing it.",
+        },
+        {
+          question: "What if I receive a damaged item?",
+          answer:
+            "If you receive a damaged item, please contact us within 48 hours for a replacement.",
+        },
+        {
+          question: "Do you have a loyalty program?",
+          answer:
+            "Yes, we have a loyalty program that rewards you with points for every purchase.",
+        },
+      ];
+      const faqContainer = document.getElementById("faq-container");
+      const ul = document.createElement("ul");
+      faqs.forEach((faq) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${faq.question}</strong><br><span class="toggle">${faq.answer}</span>`;
+        ul.appendChild(li);
+        li.addEventListener("click", () => {
+          const answer = li.querySelector(".toggle");
+          if (answer.style.display === "none" || answer.style.display === "") {
+            answer.style.display = "block";
+          } else {
+            answer.style.display = "none";
+          }
+        });
+      });
+      faqContainer.appendChild(ul);
+    </script>
+  </body>
+</html>
