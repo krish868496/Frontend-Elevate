@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dynamic blog editor</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div id="container" class="container mx-auto my-10">
+            <h1 id="title" class="text-center text-3xl font-bold my-10">Dynamic Blog Editor</h1>
+        <div class="flex justify-end">
+                <button id="addBlog" class="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded">Add Blog</button>
+        </div>
+        <div class="w-[600px] mx-auto hidden relative p-10" id="form">
+                <button id="close" class="bg-red-500 px-6 py-2 rounded-md absolute top-0 right-2 cursor-pointer">Close</button>
+                <form action="">
+                        <div class="mb-4">
+                                <label for="title" class="block text-gray-700">Title</label>
+                                <input type="text" id="titleInput" class="border rounded w-full py-2 px-3" required />
+                        </div>
+                        <div class="mb-4">
+                                <label for="content" class="block text-gray-700">Content</label>
+                                <textarea id="contentInput" rows="4" class="border rounded w-full py-2 px-3" required></textarea>
+                        </div>
+                        <div class="flex justify-end">
+
+                                <button type="submit" id="submitBtn" class="bg-blue-500 text-white py-2 px-4 rounded">Submit</button>
+                        </div>
+                </form>
+        </div>
+      <!-- blog listing   -->
+      <div id="blogListing" class="grid grid-cols-3 gap-5">
+        <div class="bg-white shadow-md rounded-lg p-4">
+          <h2 class="text-xl font-bold">What is Javascript.</h2>
+          <p class="text-gray-700">
+            JavaScript is a versatile scripting language primarily used to add
+            interactivity and dynamic behavior to web pages.
+          </p>
+          <button class="mt-2 bg-blue-500 text-white py-1 px-3 rounded cursor-pointer editBtn">
+            Edit
+          </button>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-4">
+          <h2 class="text-xl font-bold">What is React.</h2>
+          <p class="text-gray-700">
+            React is a JavaScript library for building user interfaces, allowing
+            developers to create reusable UI components.
+          </p>
+          <button class="mt-2 bg-blue-500 text-white py-1 px-3 rounded cursor-pointer editBtn">
+            Edit
+          </button>
+      </div>
+        <div class="bg-white shadow-md rounded-lg p-4">
+          <h2 class="text-xl font-bold">What is Node.js.</h2>
+          <p class="text-gray-700">
+            Node.js is a JavaScript runtime built on Chrome's V8 engine,
+            enabling server-side scripting and building scalable network
+            applications.
+          </p>
+          <button class="mt-2 bg-blue-500 text-white py-1 px-3 rounded cursor-pointer editBtn">
+            Edit
+          </button>
+        </div>
+    </div>
+
+    <!-- script  -->
+        <script src="./index.js"></script>
+  </body>
+</html>
