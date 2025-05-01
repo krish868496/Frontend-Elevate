@@ -1,80 +1,75 @@
-const addBlog = document.querySelector("#addBlog");
-const container = document.querySelector("#container");
-const title = document.querySelector("#title");
-const blogListing = document.querySelector("#blogListing");
-const form = document.querySelector("#form");
-const editBtns = document.querySelectorAll(".editBtn");
-let formOpen = false;
-let blogs = [];
+// DOM Elements
+const elements = {
+  addBlogBtn: document.querySelector("#addBlog"),
+  container: document.querySelector("#container"),
+  title: document.querySelector("#title"),
+  blogListing: document.querySelector("#blogListing"),
+  form: document.querySelector("#form"),
+  titleInput: document.querySelector("#titleInput"),
+  contentInput: document.querySelector("#contentInput"),
+  submitBtn: document.querySelector("#submitBtn"),
+  filter: document.querySelector("#filter"),
+  filters: document.querySelector("#filters")
+};
 
-// When page loads, fetch and show blogs from localStorage
-document.addEventListener("DOMContentLoaded", function () {
-  const savedBlogs = localStorage.getItem("blogs");
+// State
+let state = {
+  formOpen: false,
+  isEditing: false,
+  currentBlogId: null,
+  blogs: [],
+  filterDropDown: ["Technology", "Health", "Travel", "Food"]
+};
 
-  if (savedBlogs) {
-    blogs = JSON.parse(savedBlogs);
-    renderBlogs();
-  }
-});
+// Local Storage Handlers
+const storage = {
+  save() {
+    localStorage.setItem("blogs", JSON.stringify(state.blogs));
+  },
+  load() {
+    const savedBlogs = localStorage.getItem("blogs");
+    if (savedBlogs) {
+      state.blogs = JSON.parse(savedBlogs);
+    }
+  },
+};
 
-addBlog.addEventListener("click", addNewBlogButton);
-function addNewBlogButton() {
-  if (formOpen) {
-    formOpen = false;
-    addBlog.innerText = "Add Blog";
-    blogListing.classList.remove("hidden");
-    form.classList.add("hidden");
-  } else {
-    formOpen = true;
-    addBlog.innerText = "Close";
-    blogListing.classList.add("hidden");
-    form.classList.remove("hidden");
-  }
+// UI Handlers
+const ui = {
+  toggleForm(open) {
+    state.formOpen = open;
+    elements.addBlogBtn.innerText = open ? "Close" : "Add Blog";
+    elements.blogListing.classList.toggle("hidden", open);
+    elements.form.classList.toggle("hidden", !open);
+  },
 
-  const titleInput = document.querySelector("#titleInput");
-  const contentInput = document.querySelector("#contentInput");
-  const submitBtn = document.querySelector("#submitBtn");
+  resetForm() {
+    elements.titleInput.value = "";
+    elements.contentInput.value = "";
+    elements.submitBtn.innerText = "Submit";
+    state.isEditing = false;
+    state.currentBlogId = null;
+  },
 
-  submitBtn.addEventListener(
-    "click",
-    function (e) {
-      e.preventDefault(); // prevent page refresh on form submit
+  populateFormForEdit(blog) {
+    elements.titleInput.value = blog.titleValue;
+    elements.contentInput.value = blog.contentValue;
+    elements.submitBtn.innerText = "Update Blog";
+    state.isEditing = true;
+    state.currentBlogId = blog.id;
+  },
 
-      const titleValue = titleInput.value;
-      const contentValue = contentInput.value;
-      if (!titleValue || !contentValue) {
-        alert("Please fill in all fields.");
-        return;
-      }
+  renderBlogs(filter = null) {
 
-      addNewBlog(titleValue, contentValue);
+   let blogsToRender = state.blogs;
 
-      blogListing.classList.remove("hidden");
-      form.classList.add("hidden");
+   if (filter) {
+     blogsToRender = state.blogs.filter((blog) => blog.filterValue === filter);
+   }
+   console.log("blogs to ", blogsToRender)
 
-      // Optionally clear input fields
-      titleInput.value = "";
-      contentInput.value = "";
-    },
-    { once: true }
-  ); // to prevent multiple event listeners
-}
-
-// render blogs
-function addNewBlog(titleValue, contentValue) {
-  blogs.push({ id: Date.now(), titleValue, contentValue });
-  saveBlog();
-}
-
-function saveBlog() {
-  localStorage.setItem("blogs", JSON.stringify(blogs));
-  renderBlogs();
-}
-
-function renderBlogs() {
-  blogListing.innerHTML = blogs
-    .map((blog) => {
-      return `
+   elements.blogListing.innerHTML = blogsToRender.map(
+     (blog) => `
         <div class="blogPost" id="${blog.id}" style="border: 1px solid #ddd; padding: 16px; margin-bottom: 16px; border-radius: 8px; background-color: #f9f9f9;">
           <h2 style="margin-bottom: 8px; font-size: 24px; color: #333;">${blog.titleValue}</h2>
           <p style="margin-bottom: 16px; font-size: 16px; color: #666;">${blog.contentValue}</p>
@@ -83,86 +78,120 @@ function renderBlogs() {
             <button class="deleteBtn" style="padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">Delete</button>
           </div>
         </div>
-      `;
-    })
-    .join("");
+      `
+   ).join("");
+  },
+};
+
+// Blog Operations
+const blogOperations = {
+  add(titleValue, contentValue, filterValue) {
+    state.blogs.push({
+      id: Date.now(),
+      titleValue,
+      contentValue,
+      filterValue
+    });
+    storage.save();
+    ui.renderBlogs();
+  },
+
+  update(id, titleValue, contentValue) {
+    state.blogs = state.blogs.map((blog) =>
+      blog.id === id ? { ...blog, titleValue, contentValue } : blog
+    );
+    storage.save();
+    ui.renderBlogs();
+  },
+
+  delete(id) {
+    state.blogs = state.blogs.filter((blog) => blog.id != id);
+    storage.save();
+    ui.renderBlogs();
+  },
+};
+
+// Event Handlers
+function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const titleValue = elements.titleInput.value.trim();
+  const contentValue = elements.contentInput.value.trim();
+  const filterValue = elements.filter.value;
+
+  if (!titleValue || !contentValue || !filterValue) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  if (state.isEditing) {
+    blogOperations.update(state.currentBlogId, titleValue, contentValue, filterValue);
+  } else {
+    blogOperations.add(titleValue, contentValue, filterValue);
+  }
+
+  ui.toggleForm(false);
+  ui.resetForm();
 }
 
+function handleAddBlogClick() {
+  ui.toggleForm(!state.formOpen);
+  if (!state.formOpen) {
+    ui.resetForm();
+  }
+}
 
-// edit blog 
-blogListing.addEventListener("click", function (e) {
-  // Check if the clicked element is an edit button
+function handleBlogListingClick(e) {
+  const blogPost = e.target.closest(".blogPost");
+  if (!blogPost) return;
+
+  const blogId = parseInt(blogPost.id);
+
   if (e.target.classList.contains("editBtn")) {
-    const blogId = e.target.closest(".blogPost").id;
-    const blog = blogs.find((blog) => blog.id == blogId);
-
-    if (formOpen) {
-      formOpen = false;
-      addBlog.innerText = "Add Blog";
-      blogListing.classList.remove("hidden");
-      form.classList.add("hidden");
-    } else {
-      formOpen = true;
-      addBlog.innerText = "Close";
-      blogListing.classList.add("hidden");
-      form.classList.remove("hidden");
+    const blog = state.blogs.find((blog) => blog.id === blogId);
+    ui.toggleForm(true);
+    ui.populateFormForEdit(blog);
+  } else if (e.target.classList.contains("deleteBtn")) {
+    if (confirm("Are you sure you want to delete this blog post?")) {
+      blogOperations.delete(blogId);
     }
-
-    const titleInput = document.querySelector("#titleInput");
-    const contentInput = document.querySelector("#contentInput");
-    const submitBtn = document.querySelector("#submitBtn");
-    submitBtn.innerText = "Update Blog";
-
-    // Set form fields with the current blog values
-    titleInput.value = blog.titleValue;
-    contentInput.value = blog.contentValue;
-
-    // Handle the form submission to update the blog
-    submitBtn.addEventListener(
-      "click",
-      function (e) {
-        e.preventDefault(); // Prevent page refresh on form submit
-
-        const titleValue = titleInput.value;
-        const contentValue = contentInput.value;
-
-        if (!titleValue || !contentValue) {
-          alert("Please fill in all fields.");
-          return;
-        }
-
-        // Update the specific blog
-        blogs = blogs.map((b) =>
-          b.id === blog.id
-            ? { ...b, titleValue: titleValue, contentValue: contentValue }
-            : b
-        );
-
-        saveBlog(); // Save the updated blogs to localStorage
-        renderBlogs(); // Re-render the updated blogs
-
-        blogListing.classList.remove("hidden");
-        form.classList.add("hidden");
-
-        // Optionally clear input fields
-        titleInput.value = "";
-        contentInput.value = "";
-      },
-      { once: true }
-    );
   }
-});
+}
 
+// Initialize Application
+function initApp() {
+  // Load blogs from localStorage
+  storage.load();
+  ui.renderBlogs();
+    state.filterDropDown.forEach((item) => {
+      const option = document.createElement("option");
+      option.value = item;
+      option.textContent = item;
+      elements.filter.appendChild(option);
+    });
+    state.filterDropDown.map((item) => {
+      const button = document.createElement("button");
+      button.setAttribute("data-filter", item);
+      button.className =
+        "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2 filter-button";
+      button.innerText = item;
+      elements.filters.appendChild(button);
+    })
 
-// delete blog 
-blogListing.addEventListener("click", (e) => {
-  if (e.target.classList.contains("deleteBtn")) {
-    const blogId = e.target.closest(".blogPost").id;
-    console.log("blogId", blogId);
+    document.querySelectorAll(".filter-button").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const filterValue = e.target.getAttribute("data-filter");
+        ui.renderBlogs(filterValue); 
+      });
+    });
 
-    blogs = blogs.filter((blog) => blog.id != blogId); // update blogs array
-    saveBlog(); // save updated blogs to localStorage
-    renderBlogs(); // re-render the updated list
-  }
-});
+    
 
+  // Add event listeners
+  elements.addBlogBtn.addEventListener("click", handleAddBlogClick);
+  elements.submitBtn.addEventListener("click", handleFormSubmit);
+  elements.blogListing.addEventListener("click", handleBlogListingClick);
+}
+
+// Start the application when the DOM is loaded
+document.addEventListener("DOMContentLoaded", initApp);
