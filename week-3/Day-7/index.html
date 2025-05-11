@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Debounce & Throttle Demo</title>
+  <style>
+    body {
+      height: 2000px;
+      font-family: Arial;
+      padding: 20px;
+    }
+    #search {
+      width: 300px;
+      padding: 10px;
+      font-size: 18px;
+    }
+    #output {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: blue;
+      width: 0%;
+      transition: width 0.1s;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Debounce & Throttle Examples</h1>
+
+  <!-- Debounce Input -->
+  <input type="text" placeholder="Type to search..." id="search" />
+  <div id="output">Search output will appear in console (debounced)</div>
+
+  <!-- Throttle Key Count -->
+  <div style="margin-top: 30px;">
+    <strong>Type anything on keyboard (Throttle - 1s):</strong>
+    <div id="keyCountDisplay">Keys pressed: 0</div>
+  </div>
+
+  <!-- Scroll Throttle Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <script>
+    // Debounce Function
+    function debounce(func, delay) {
+      let timer;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    }
+
+    // Throttle Function
+    function throttle(func, delay) {
+      let lastCall = 0;
+      return function (...args) {
+        const now = Date.now();
+        if (now - lastCall >= delay) {
+          lastCall = now;
+          func.apply(this, args);
+        }
+      };
+    }
+
+    // Debounced Search
+    function handleSearchInput(value) {
+      console.log("Search:", value);
+    }
+
+    const debouncedSearch = debounce(handleSearchInput, 500);
+    document.getElementById("search").addEventListener("input", (e) => {
+      debouncedSearch(e.target.value);
+    });
+
+    // Throttled Typing Speed Logger
+    let keyCount = 0;
+    const keyCountDisplay = document.getElementById("keyCountDisplay");
+
+    function reportKeySpeed() {
+      keyCountDisplay.textContent = `Keys pressed: ${keyCount}`;
+      keyCount = 0;
+    }
+
+    const throttledKeyReport = throttle(reportKeySpeed, 1000);
+
+    document.addEventListener("keydown", () => {
+      keyCount++;
+      throttledKeyReport();
+    });
+
+    // Throttled Scroll Progress Bar
+    function updateProgressBar() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (scrollTop / docHeight) * 100;
+      document.getElementById("progress-bar").style.width = `${scrolled}%`;
+    }
+
+    window.addEventListener("scroll", throttle(updateProgressBar, 100));
+  </script>
+
+</body>
+</html>
